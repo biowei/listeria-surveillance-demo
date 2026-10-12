@@ -1,0 +1,11 @@
+{
+  "_note": "Fill at M4/M5. Every number in VALIDATION_REPORT.md must trace to this commit.",
+  "pipeline_commit": "TBD",
+  "nextflow_version": "TBD",
+  "containers": {},
+  "databases": {
+    "chewbbaca_schema": "TBD (source, locus count, download date)",
+    "amrfinderplus_db": "TBD",
+    "mlst_db": "TBD"
+  }
+}

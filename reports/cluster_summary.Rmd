@@ -1,0 +1,43 @@
+---
+title: "Listeria cluster summary — public-health view (DEMONSTRATION, public data)"
+output: html_document
+params:
+  partitions: "../results/clusters/lm_metadata_w_partitions.tsv"
+  tree: "../results/tree/core.treefile"
+  threshold_col: "MST-7x1.0"   # replace with the frozen threshold column
+---
+
+<!--
+Milestone M7. Audience: an epidemiologist at a public-health unit.
+Each section answers one question they ask. Keep genomics jargon out of headings.
+If any collection dates are synthetic (date_is_synthetic = 1), say so in the
+first paragraph and on the chart.
+-->
+
+```{r setup, include=FALSE}
+library(dplyr); library(readr); library(ape); library(phylepic)
+meta <- read_tsv(params$partitions, show_col_types = FALSE)
+tree <- read.tree(params$tree)
+```
+
+## 1. What is the signal?
+<!-- TODO: one sentence — how many isolates, how many in the cluster, date range, states. -->
+
+## 2. How close are these isolates genetically?
+<!-- TODO: distance range inside the cluster vs to the nearest non-member;
+     state the threshold as a policy choice and what changes at T±2. -->
+
+## 3. When and where? (epi curve matched to the tree)
+```{r phylepic, fig.height=7}
+# TODO: build the phylepic chart. Start from the package vignette
+# (https://cidm-ph.github.io/phylepic/). It needs the tree and a metadata table
+# keyed by tip label with a collection-date column.
+```
+
+## 4. What does this mean for action?
+<!-- TODO: two or three plain sentences: consistent with a common source? what
+     would an investigator check next? what this analysis cannot tell you. -->
+
+## 5. Method and limits
+<!-- TODO: pipeline commit, tool versions (from version_lock.json), QC exclusions,
+     the standing limitation from acceptance_criteria.md. -->
