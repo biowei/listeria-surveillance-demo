@@ -26,6 +26,7 @@ Wei must be able to explain and defend every core line in an interview.
 
 **Wei writes these. Claude explains, reviews and suggests — in chat, as a proposed diff —
 and does not create or rewrite them unless Wei says "write it" in that same message:**
+
 - `modules/local/reportree/` and `modules/local/chewbbaca/extractcgmlst/` (main.nf, stub, tests)
 - `subworkflows/local/population_surveillance/main.nf`
 - the call to that subworkflow in `workflows/bacass.nf`
@@ -33,8 +34,7 @@ and does not create or rewrite them unless Wei says "write it" in that same mess
 - `validation/acceptance_criteria.md` thresholds and the SPEC-A selection rule
 - `validation/VALIDATION_REPORT.md` conclusions
 
-**Claude may do directly (say what changed and why):** `nf-core modules install / update /
-patch`, `nextflow.config` and `nextflow_schema.json` plumbing (`nf-core pipelines schema build`),
+**Claude may do directly (say what changed and why):** `nf-core modules install / update / patch`, `nextflow.config` and `nextflow_schema.json` plumbing (`nf-core pipelines schema build`),
 `conf/modules.config` entries, `conf/listeria.config` and `conf/test_listeria.config`,
 lint fixes, container/environment debugging, running tests and pipelines, reading logs,
 staging scripts, the SQL loader, and docs that are not conclusions.
@@ -113,14 +113,14 @@ On Apple Silicon add `arm64` to the profile list, or run on Codespaces. Set
 
 ## Layout (after carry-over)
 
-| Path | Holds |
-|---|---|
-| `conf/listeria.config`, `conf/test_listeria.config` | profiles for this project |
-| `subworkflows/local/population_surveillance/` | MLST, AMR, cgMLST, ReporTree, Snippy, snp-dists, IQ-TREE |
-| `modules/local/reportree/`, `modules/local/chewbbaca/extractcgmlst/` | the two modules nf-core lacks |
-| `bin/cluster_metrics.py`, `bin/test_cluster_metrics.py` | validation metrics + tests |
-| `assets/test_fixtures/` | fixtures for the metrics tests |
-| `validation/` | acceptance criteria, phase 0 findings, version lock, validation report |
-| `db/schema.sql` | data layer (PHA4GE contextual fields, hAMRonization AMR fields) |
-| `reports/` | isolate and cluster report templates |
-| `docs/fork_plan.md`, `docs/build_guide.md`, `docs/data_staging.md` | plans |
+| Path                                                                     | Holds                                                                  |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| `conf/listeria.config`, `conf/test_listeria.config`                  | profiles for this project                                              |
+| `subworkflows/local/population_surveillance/`                          | MLST, AMR, cgMLST, ReporTree, Snippy, snp-dists, IQ-TREE               |
+| `modules/local/reportree/`, `modules/local/chewbbaca/extractcgmlst/` | the two modules nf-core lacks                                          |
+| `bin/cluster_metrics.py`, `bin/test_cluster_metrics.py`              | validation metrics + tests                                             |
+| `assets/test_fixtures/`                                                | fixtures for the metrics tests                                         |
+| `validation/`                                                          | acceptance criteria, phase 0 findings, version lock, validation report |
+| `db/schema.sql`                                                        | data layer (PHA4GE contextual fields, hAMRonization AMR fields)        |
+| `reports/`                                                             | isolate and cluster report templates                                   |
+| `docs/fork_plan.md`, `docs/build_guide.md`, `docs/data_staging.md` | plans                                                                  |
