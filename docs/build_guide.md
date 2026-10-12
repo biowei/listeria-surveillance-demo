@@ -46,7 +46,9 @@ Recommended: ==write and stub-run locally==, real runs on Codespaces or Seqera/A
    branch `listeria-surveillance`. Keep the MIT licence and credit bacass.
    (Keep git out of the Cowork folder itself — the folder blocks the deletes git needs.)
 3. Baseline: `nextflow run . -profile test,docker --outdir baseline` (Apple Silicon:
-   add `arm64`, or run on Codespaces). Save the MultiQC report.
+   add `emulate_amd64`, or run on Codespaces — not `arm64`: its Wave build of BUSCO fails
+   because bioconda has no linux-aarch64 `sepp=4.5.5`; emulated Unicycler is ~4–5× slower).
+   Save the MultiQC report.
 4. Copy the carry-over files from `repo/` (FORK_PLAN §7).
 
 **Done when:** unmodified bacass test profile passes on your compute; first commit pushed.
