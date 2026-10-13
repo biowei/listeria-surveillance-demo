@@ -59,10 +59,10 @@ Recommended: ==write and stub-run locally==, real runs on Codespaces or Seqera/A
 
 Read, with one paragraph of notes each (DOI / first author / year):
 
-1. Timme RE et al., *PeerJ* 2017;5:e3893 — the benchmark design and its truth labels.
-2. Mixão V et al., *Genome Medicine* 2023, doi:10.1186/s13073-023-01196-1 — ReporTree:
+1. Timme RE et al., ***PeerJ* 2017**;5:e3893 — the benchmark design and its truth labels.
+2. Mixão V et al., ***Genome Medicine* 2023**, doi:10.1186/s13073-023-01196-1 — ReporTree:
    clusters at thresholds linked to metadata.
-3. Nghiem S et al., *Lancet Reg Health West Pac* 2025;59:101592 — integrated genomic
+3. Nghiem S et al., ***Lancet Reg Health West Pac* 2025**;59:101592 — integrated genomic
    surveillance and salmonellosis in Australia (the #37 question).
 4. The primary source for the 7-allele *L. monocytogenes* cgMLST threshold — find it
    yourself (start from the Pasteur cgMLST scheme paper) and record it.
