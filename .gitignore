@@ -1,6 +1,12 @@
 .nextflow*
 work/
-data/
+data/*
+!data/runs.tsv
+!data/staging_manifest.tsv
+!data/ena_catalogue.tsv
+!data/metadata.tsv
+!data/spec_a_query.md
+!data/Listeria_monocytogenes_1408MLGX6-3WGS.tsv
 results/
 .DS_Store
 testing/
