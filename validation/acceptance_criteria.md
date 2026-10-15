@@ -15,11 +15,30 @@ a prospective validation, and it is not a clinical or public-health service.
 |---|---|---|---|
 | SENS | Timme 2017 *L. monocytogenes* stone-fruit isolates labelled outbreak | 28 | Timme RE et al., PeerJ 2017;5:e3893, Table S-sheet |
 | SPEC-T | Timme outgroups | 3 | same |
-| SPEC-A | Added public non-outbreak isolates, same clonal complex, chosen by the rule below **before** running | TBD (≥ 35 recommended) | NCBI Pathogen Detection: different SNP cluster from the event — an **assumption** of unrelatedness, stated as such |
+| SPEC-A | Added public non-outbreak isolates, same clonal complex, chosen by the rule below **before** running | 40 | NCBI Pathogen Detection: different SNP cluster from the event — an **assumption** of unrelatedness, stated as such |
 
-Selection rule for SPEC-A (write it before downloading): TBD — e.g. "first N isolates
-of CC<x> in NCBI Pathogen Detection with paired Illumina reads, collected 20xx–20xx,
-not in SNP cluster PDS<y>, sorted by accession".
+Selection rule for SPEC-A — committed before any candidate isolate was viewed (the git
+commit that adds this rule is its timestamp). Applied mechanically; no isolate is added
+or removed by judgement.
+
+1. **Source.** NCBI Pathogen Detection, *Listeria* isolate browser, snapshot
+   `PDG<accession.version>` current on the query date. Query and date are recorded in
+   `data/spec_a_query.md`.
+2. **Clonal complex.** CC = **<CC>**: the CC of the outbreak strain, from `mlst` on
+   **<2–3 named outbreak runs>** plus the ST→CC table of the Pasteur BIGSdb scheme. If
+   those isolates disagree on CC, stop and amend.
+3. **Include:** *L. monocytogenes*; ST in that CC; at least one SRA run that is Illumina
+   paired-end; collection year 2010–2016.
+4. **Exclude:** any isolate in the Timme sheet; any isolate in the outbreak's SNP
+   cluster(s) **<PDSxxxx>** (taken from the 28 SENS isolates); any isolate not assigned to
+   a SNP cluster.
+5. **One per SNP cluster.** Keep only the lowest-accession isolate in each SNP cluster,
+   so that specificity isn't inflated by near-duplicate isolates.
+6. **Order and size.** Sort by BioSample accession, ascending, and take the first N = 40.
+7. **Replacement.** An isolate that fails staging (md5, read count or pairing) or AC1 QC
+   is replaced by the next isolate in the sorted list. Every replacement is logged with
+   its reason. AC4's denominator is the isolates that passed QC, and that number is
+   reported.
 
 ## What each arm can bear (computed before running)
 
@@ -29,7 +48,7 @@ Wilson 95% lower bound if every isolate in the arm is called correctly:
 |---|---|---|---|
 | SENS | 28 | 0.879 | A "lower bound ≥ 0.90" criterion is **unattainable** at n = 28. Use a point criterion (28/28) and report the bound beside it |
 | SPEC-T | 3 | 0.439 | Cannot support any specificity claim on its own |
-| SPEC-T + SPEC-A | 38 | ~0.91 | 35 is the smallest flawless n whose bound clears 0.90 |
+| SPEC-T + SPEC-A | 43 | 0.918 | N = 40 chosen over the minimum 35 (the smallest flawless SPEC-A n whose combined bound clears 0.90) to leave a margin for QC losses |
 
 ## Register
 
