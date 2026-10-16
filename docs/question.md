@@ -16,9 +16,9 @@ Sensitivity asks whether the pipeline finds the outbreak; specificity asks wheth
 | --- | --- | --- | --- | --- | --- |
 | SENS | Sensitivity | Outbreak isolates, 2014 US stone-fruit listeriosis outbreak (Timme sheet `1408MLGX6-3WGS`) | 28 | Timme 2017, epidemiologically confirmed | 28/28 gives a Wilson 95% lower bound of 0.879 at best |
 | SPEC-T | Specificity | Outgroups in the same sheet | 3 | Timme 2017 | 3/3 gives a lower bound of 0.439: no specificity claim on its own |
-| SPEC-A | Specificity | Same clonal complex, NCBI Pathogen Detection, different SNP cluster | ≥ 35 | Unrelatedness **assumed** from a different SNP cluster, not shown epidemiologically | Carries the specificity claim, under that assumption |
+| SPEC-A | Specificity | Same clonal complex (CC183), NCBI Pathogen Detection, different SNP cluster | 5 (the rule asked for 40; only 5 CC183 SNP clusters exist) | Unrelatedness **assumed** from a different SNP cluster, not shown epidemiologically | With SPEC-T, 8/8 gives a lower bound of 0.676: a check for counterexamples, not a specificity claim |
 
-SPEC-A isolates come from the same clonal complex because isolates from other complexes usually differ by 1,000 or more alleles (Moura 2016) and test nothing. The selection rule for SPEC-A is written into the acceptance criteria before any isolate is looked at (M2).
+SPEC-A isolates come from the same clonal complex because isolates from other complexes usually differ by 1,000 or more alleles (Moura 2016) and test nothing. The selection rule for SPEC-A was written into the acceptance criteria before any isolate was looked at (M2). It found only 5 eligible isolates, 4 of them the outbreak's own ST382, so the specificity test is hard but small.
 
 ## Why the threshold is a policy choice
 
@@ -40,7 +40,7 @@ Recovering one known outbreak shows the pipeline can do it once, on this data. I
 
 - that the pipeline works on other outbreaks, clonal complexes, sequencers or laboratories
 - prospective performance: the answer was known before the run
-- specificity beyond the assumption that SPEC-A isolates are unrelated
+- specificity: 8 non-outbreak isolates cannot establish it (best-case lower bound 0.676), and even those rest on the assumption that SPEC-A isolates are unrelated
 - high certainty: even 28/28 leaves the lower bound at 0.879
 - that 7 alleles is the right threshold; the project uses it, it does not validate it
 - anything about time trends where collection dates are synthetic (flagged on every chart)
