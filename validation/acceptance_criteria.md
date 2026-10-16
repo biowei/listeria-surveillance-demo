@@ -15,7 +15,7 @@ a prospective validation, and it is not a clinical or public-health service.
 |---|---|---|---|
 | SENS | Timme 2017 *L. monocytogenes* stone-fruit isolates labelled outbreak | 28 | Timme RE et al., PeerJ 2017;5:e3893, Table S-sheet |
 | SPEC-T | Timme outgroups | 3 | same |
-| SPEC-A | Added public non-outbreak isolates, same clonal complex, chosen by the rule below **before** running | 40 | NCBI Pathogen Detection: different SNP cluster from the event — an **assumption** of unrelatedness, stated as such |
+| SPEC-A | Added public non-outbreak isolates, same clonal complex, chosen by the rule below **before** running | 5 (rule asked for 40; only 5 CC183 SNP clusters exist in PDG000000001.4942, see `data/spec_a_query.md`) | NCBI Pathogen Detection: different SNP cluster from the event — an **assumption** of unrelatedness, stated as such |
 
 Selection rule for SPEC-A — committed before any candidate isolate was viewed (the git
 commit that adds this rule is its timestamp). Applied mechanically; no isolate is added
@@ -65,6 +65,9 @@ or removed by judgement.
    its reason. AC4's denominator is the isolates that passed QC, and that number is
    reported.
 
+**Outcome (2026-10-16):** the rule yielded 5 of 40 (shortfall, step 6). Accepted as is;
+no filter widened. 4 of the 5 are ST382, the outbreak's ST, in other SNP clusters.
+
 ## What each arm can bear (computed before running)
 
 Wilson 95% lower bound if every isolate in the arm is called correctly:
@@ -73,7 +76,7 @@ Wilson 95% lower bound if every isolate in the arm is called correctly:
 |---|---|---|---|
 | SENS | 28 | 0.879 | A "lower bound ≥ 0.90" criterion is **unattainable** at n = 28. Use a point criterion (28/28) and report the bound beside it |
 | SPEC-T | 3 | 0.439 | Cannot support any specificity claim on its own |
-| SPEC-T + SPEC-A | 43 | 0.918 | N = 40 chosen over the minimum 35 (the smallest flawless SPEC-A n whose combined bound clears 0.90) to leave a margin for QC losses |
+| SPEC-T + SPEC-A | 8 | 0.676 | **No specificity claim is possible.** AC4 is a counterexample check: any non-outbreak isolate inside the outbreak cluster at T is a failure; a pass means none seen in 8, not that specificity is established. (Planned n = 43, bound 0.918; shortfall recorded 2026-10-16.) |
 
 ## Register
 
