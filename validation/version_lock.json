@@ -51,6 +51,14 @@
       "precomputed": "2026-10-16 with bin/precompute_schema.sh (AlleleCall on GCA_001257525.1, rw), which added loci_modes and pre_computed/. A second AlleleCall (GCA_001257505.1) on a read-only mount succeeded and left the tree checksum unchanged. Per-file list: data/schema/pasteur_cgmlst1748_chewie_files_precomputed.sha256."
     },
     "amrfinderplus_db": "TBD",
-    "mlst_db": "TBD"
+    "mlst_db": "TBD",
+    "snippy_reference": {
+      "accession": "GCA_001047715.1",
+      "sequence": "CP012021.1 (ASM104771v1), Listeria monocytogenes CFSAN023463, 2,939,733 bp",
+      "source": "NCBI Datasets API, downloaded 2026-10-16; Timme sheet suggestedReference",
+      "file": "data/reference/GCA_001047715.1_ASM104771v1_genomic.fna (not committed)",
+      "sha256": "53bd528aaca3c2a3e2b17eecc3fb6d2ba9647e9a8823bdb3573483f9fe4e92c3",
+      "note": "GCA_001047715.2 is the same sequence rotated by 318 bp; .1 kept for benchmark fidelity. Timme's sha256sumAssembly matches neither file (phase0_findings.md §1)."
+    }
   }
 }

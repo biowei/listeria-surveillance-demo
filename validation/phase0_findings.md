@@ -7,9 +7,19 @@ cannot reproduce from this file does not belong in it.
 - Accession in the Timme sheet (suggested reference): CFSAN023463, SAMN03002783,
   `genBankAssembly` = GCA_001047715.1, run SRR1556288 (`suggestedReference = TRUE`, the only one)
 - Observation (2026-10-16): Pathogen Detection PDG000000001.4942 lists this BioSample with
-  assembly **GCA_001047715.2**, not .1. Decide which version is the fixed Snippy reference
-  and record why; the sheet's `sha256sumAssembly` refers to the version Timme used.
-- Downloaded file sha256: TBD — matches sheet? TBD
+  assembly **GCA_001047715.2**, not .1. Resolved below.
+- **Chosen: GCA_001047715.1** (CP012021.1, ASM104771v1; PacBio, 1 chromosome,
+  2,939,733 bp), the version the Timme sheet names. Downloaded 2026-10-16 from the NCBI
+  Datasets API to `data/reference/GCA_001047715.1_ASM104771v1_genomic.fna` (not
+  committed), sha256 `53bd528aaca3c2a3e2b17eecc3fb6d2ba9647e9a8823bdb3573483f9fe4e92c3`.
+- Matches the sheet's `sha256sumAssembly`? **No.** Sheet: `9a80c8d8…895b`. Neither
+  .1 nor .2 matches it, so Timme hashed differently formatted bytes and the sheet
+  checksum cannot be verified. The accession and sequence are the identity check.
+- .1 vs .2: **the same sequence, rotated.** GCA_001047715.2 (CP012021.2, released
+  2020-01-16, sha256 `6077a4e8…34a9`) is 2,939,733 bp too, and rotating it by 318 bp
+  makes it identical to .1 (0 differing bases). SNP calls and distances are therefore the
+  same with either; only coordinates differ by the 318 bp offset. .1 is kept for
+  benchmark fidelity.
 
 ## 2. cgMLST schema
 - Source: **Pasteur cgMLST1748** (BIGSdb `pubmlst_listeria_seqdef`, scheme 3), downloaded
