@@ -33,7 +33,21 @@
     }
   },
   "databases": {
-    "chewbbaca_schema": "TBD (source, locus count, download date)",
+    "chewbbaca_schema": {
+      "source": "Pasteur cgMLST1748, BIGSdb pubmlst_listeria_seqdef scheme 3 (https://bigsdb.pasteur.fr)",
+      "downloaded": "2026-10-16, bin/fetch_bigsdb_scheme.py (commit 7d86979)",
+      "raw_loci": 1748,
+      "raw_alleles": 1381390,
+      "raw_manifest_sha256": "d2621eeeee2b27a94e91e30931b30f7e7836624f39a0eec77e335a5c9ce8fe65",
+      "prepared_with": "chewBBACA 3.3.10 PrepExternalSchema, BSR 0.6, translation table 11, no --size-filter",
+      "prepared_loci": 1748,
+      "invalid_loci": 0,
+      "invalid_alleles": 0,
+      "training_file": "Listeria_monocytogenes.trn bundled with chewBBACA 3.3.10, sha256 6d5824e9aecf8b72bcf38c70bb9d2a3c11d77a7fb5ffee35d8995f4bc467aced",
+      "prepared_tree_sha256": "26b4440dde44afd3366fc1420b575e6e3ca7ba5d6aaef56b5be58f8e07a74271",
+      "prepared_tree_note": "sha256 of data/schema/pasteur_cgmlst1748_chewie_files.sha256 (per-file sha256 of all 3,499 files, LC_ALL=C sorted paths), taken before any AlleleCall. AlleleCall adds loci_modes and pre_computed/ on first use (phase0_findings.md §3a), so recompute after the M4 pre-compute step and record both.",
+      "details": "validation/phase0_findings.md §2"
+    },
     "amrfinderplus_db": "TBD",
     "mlst_db": "TBD"
   }
