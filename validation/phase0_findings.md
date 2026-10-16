@@ -144,6 +144,32 @@ snippy-core → "snp-sites -c -o core.aln core.full.aln ... No SNPs were detecte
   introduced differences gives a 5-column core.aln as before; a genuine snippy-core
   error (sample/reference contig mismatch) still fails the task.
 
+### 3e. Kraken2 species gate (AC1) on a toy input
+Run 2026-10-16, before any real run. Input: 400,000 read pairs simulated from
+*L. monocytogenes* EGD-e (GCF_000196035.1, sha256 `a0357eee…6292`; a public reference
+strain, not one of the 36 isolates) with wgsim 1.0
+(`quay.io/biocontainers/wgsim@sha256:e1a6049a…299b1c`): `-e 0.01 -1 150 -2 150 -N 400000
+-d 400 -s 50 -r 0.001 -R 0 -S 11` (~40×). Kraken2 2.1.6 in the bacass container
+(`community.wave.seqera.io/library/kraken2_coreutils_pigz@sha256:a4d9c87b…fb5fb`) with the
+module's arguments plus `--memory-mapping`, database Standard-8 2026-06-26.
+
+```
+400000 sequences processed; 363,585 classified (90.90%), 36,415 unclassified
+species share of classified reads (clade counts / root clade count):
+  L. monocytogenes 80.829%   L. innocua 0.168%   L. swaminathanii 0.089%
+  L. welshimeri 0.055%   L. seeligeri 0.051%   L. ivanovii 0.045%   all others ≤ 0.007%
+  all non-monocytogenes species combined 0.512%; ~18% assigned at genus Listeria only
+```
+
+- Frozen gate (top species *L. monocytogenes*; every other species < 1 % of classified
+  reads): **passes**, with the largest other species at 0.168 %, about 6× below the limit.
+- **Best case, not proof.** EGD-e itself is in the database library (NC_003210.1), and
+  simulated reads carry only uniform errors. Real isolates can misclassify more. No
+  amendment is indicated by this check.
+- Gate definition for implementation: "classified reads" = the root clade count in the
+  Kraken2 report; species share = that species' clade count over it. Reads assigned
+  only at genus or higher are not another species.
+
 ## 4. Staged data
 - Timme runs (SENS + SPEC-T), staged 2026-10-16 with `bin/stage_reads.py fetch`
   (commit 250732e):

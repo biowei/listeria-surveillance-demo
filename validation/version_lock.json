@@ -33,6 +33,7 @@
     }
   },
   "databases": {
+    "amrfinderplus_db": "TBD",
     "chewbbaca_schema": {
       "source": "Pasteur cgMLST1748, BIGSdb pubmlst_listeria_seqdef scheme 3 (https://bigsdb.pasteur.fr)",
       "downloaded": "2026-10-16, bin/fetch_bigsdb_scheme.py (commit 7d86979)",
@@ -50,7 +51,17 @@
       "precomputed_tree_sha256": "5e961048d6a0a0bf0f2cf642f7aa3d09bf6719b2e5e51e041b37976d9671e4a0",
       "precomputed": "2026-10-16 with bin/precompute_schema.sh (AlleleCall on GCA_001257525.1, rw), which added loci_modes and pre_computed/. A second AlleleCall (GCA_001257505.1) on a read-only mount succeeded and left the tree checksum unchanged. Per-file list: data/schema/pasteur_cgmlst1748_chewie_files_precomputed.sha256."
     },
-    "amrfinderplus_db": "TBD",
+    "kraken2db": {
+      "name": "Standard-8 (Standard capped at 8 GB), Ben Langmead AWS index collection",
+      "archive": "k2_standard_08_GB_20260626.tar.gz (https://genome-idx.s3.amazonaws.com/kraken/)",
+      "archive_sha256": "b17d05ca1459564b49b63d014c4b2ee6ebe1ca0143e6c184e0dfd6d940a55981",
+      "archive_bytes": 5946578575,
+      "unpacked_md5_check": "17/17 files OK against the published standard_08_GB.md5 (hash.k2d fb429676d739aaa4d27ac6955af2e4cc, opts.k2d eebfd340c759d54c82c7769b40f7a50b, taxo.k2d f5697f04a6e072bde8504ebc6c142a22)",
+      "downloaded": "2026-10-16",
+      "file": "data/kraken2/ (not committed); bacass takes the tarball as --kraken2db",
+      "run_with": "--memory-mapping (Docker has 8 GB; the hash table is 8.0 GB)",
+      "note": "Toy check of the AC1 species gate in phase0_findings.md §3e."
+    },
     "mlst_db": {
       "container": "quay.io/biocontainers/mlst:2.25.0--hdfd78af_0",
       "digest": "sha256:e3da7ad580fae661251d1f62d505789a7c353bc83be8850e603516468daaa153",
