@@ -31,7 +31,7 @@ cluster thresholds (ReporTree), reference-based SNPs (Snippy), SNP distances, tr
 | AMR → standard format       | `hamronization/amrfinderplus` | nf-core                         | hamronization 1.1.9                                 |
 | cgMLST allele calls          | `chewbbaca/allelecall`        | nf-core                         | chewbbaca 3.3.10                                    |
 | cgMLST matrix (missing → 0) | `chewbbaca/extractcgmlst`     | **local — you write it** | chewbbaca (same tag)                                |
-| Clusters at thresholds       | `reportree`                   | **local — you write it** | insapathogenomics/reportree (pin v2.6.1)            |
+| Clusters at thresholds       | `reportree`                   | **local — you write it** | insapathogenomics/reportree (pin v2.6.0)            |
 | SNPs vs fixed reference      | `snippy/run`, `snippy/core` | nf-core                         | snippy 4.6.0                                        |
 | SNP distances                | `snpdists`                    | nf-core                         | snp-dists 0.8.2                                     |
 | Tree                         | `iqtree`                      | nf-core                         | iqtree 3.1.3                                        |
@@ -166,7 +166,7 @@ Tool versions: bacass 2.6.0 and current modules both report versions through the
   keep the tarball, pass it with `--amrfinder_db`, record its version.
 - **Fixed reference** for Snippy (Timme `suggestedReference`), checksum in `phase0_findings.md`.
 - **chewBBACA `--no-inferred`** via `ext.args` so a run cannot change the schema.
-- Pin ReporTree to an exact tag (v2.6.1 at time of writing), never `latest`.
+- Pin ReporTree to an exact tag (v2.6.0, by digest; no v2.6.1 was released), never `latest`.
 - Gate the run on the commit (`run.sh` checks `git rev-parse HEAD` vs `version_lock.json`).
 - `-stub` still works: every nf-core module ships a stub, and your two local modules
   must too. A stub run proves wiring only.

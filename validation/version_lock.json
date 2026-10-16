@@ -2,7 +2,15 @@
   "_note": "Fill at M4/M5. Every number in VALIDATION_REPORT.md must trace to this commit.",
   "pipeline_commit": "TBD",
   "nextflow_version": "TBD",
-  "containers": {},
+  "containers": {
+    "reportree": {
+      "image": "insapathogenomics/reportree:v2.6.0",
+      "digest": "sha256:061a2538173c7419a58d429186f239aac235735d701b2390b882a5d8738fe23f",
+      "release": "v2.6.0 (2025-10-22)",
+      "pinned": "2026-10-16",
+      "note": "v2.6.1 named in early docs does not exist; v2.7.0 (2026-09-25) had no container when pinned. Behaviour checked in phase0_findings.md §3b-3c."
+    }
+  },
   "databases": {
     "chewbbaca_schema": "TBD (source, locus count, download date)",
     "amrfinderplus_db": "TBD",

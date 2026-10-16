@@ -91,7 +91,8 @@ On Apple Silicon add `arm64` to the profile list, or run on Codespaces. Set
 - **AMRFinderPlus database pinned** (`--amrfinder_db`); do not run `AMRFINDERPLUS_UPDATE` in
   validation runs — it changes the database and breaks rerun identity.
 - Fixed Snippy reference (Timme `suggestedReference`), checksum in `validation/phase0_findings.md`.
-- chewBBACA `AlleleCall` with `--no-inferred`; ReporTree pinned (v2.6.1 at project start).
+- chewBBACA `AlleleCall` with `--no-inferred`; ReporTree pinned at v2.6.0 (`insapathogenomics/reportree:v2.6.0`, digest in
+  `validation/version_lock.json`; no v2.6.1 was ever released).
 - Record every tool, container and database version in `validation/version_lock.json`.
 
 ## Data rules
