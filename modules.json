@@ -5,6 +5,11 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "amrfinderplus/run": {
+                        "branch": "master",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "installed_by": ["modules"]
+                    },
                     "autocycler/cluster": {
                         "branch": "master",
                         "git_sha": "55492bb796dc15d32db2673fc3f269b8cb24dcb2",
@@ -60,6 +65,11 @@
                         "git_sha": "cf735af4433f2dc8e410f67012dff824ef9990eb",
                         "installed_by": ["modules"]
                     },
+                    "chewbbaca/allelecall": {
+                        "branch": "master",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "installed_by": ["modules"]
+                    },
                     "dragonflye": {
                         "branch": "master",
                         "git_sha": "ccfd6f5c2e6a24f50c7713e9a5ab887056ec9416",
@@ -90,6 +100,16 @@
                         "git_sha": "96c57dfd98a0641886a67bd449fe33ee2ec0e374",
                         "installed_by": ["modules"]
                     },
+                    "hamronization/amrfinderplus": {
+                        "branch": "master",
+                        "git_sha": "56f42bcdc5030d479f9a694355e5ed7fb64d4c5f",
+                        "installed_by": ["modules"]
+                    },
+                    "iqtree": {
+                        "branch": "master",
+                        "git_sha": "fb60d28393f3c278daecbd276e7d8cd502689a8b",
+                        "installed_by": ["modules"]
+                    },
                     "kraken2/kraken2": {
                         "branch": "master",
                         "git_sha": "71a39f3598935d64ffd65f0960e4d2d4a42ab778",
@@ -113,6 +133,11 @@
                     "minimap2/align": {
                         "branch": "master",
                         "git_sha": "2c2d1cf80866dbd6dd0ea5d61ddd59533a72d41e",
+                        "installed_by": ["modules"]
+                    },
+                    "mlst": {
+                        "branch": "master",
+                        "git_sha": "ddeeb1c3b5090dc65cce55ff1a69e87f26c053f1",
                         "installed_by": ["modules"]
                     },
                     "multiqc": {
@@ -165,6 +190,21 @@
                     "samtools/sort": {
                         "branch": "master",
                         "git_sha": "4352dbdb09ec40db71e9b172b97a01dcf5622c26",
+                        "installed_by": ["modules"]
+                    },
+                    "snippy/core": {
+                        "branch": "master",
+                        "git_sha": "2a0a771d78bb58205c784dea56f2e4db251a63ec",
+                        "installed_by": ["modules"]
+                    },
+                    "snippy/run": {
+                        "branch": "master",
+                        "git_sha": "2a0a771d78bb58205c784dea56f2e4db251a63ec",
+                        "installed_by": ["modules"]
+                    },
+                    "snpdists": {
+                        "branch": "master",
+                        "git_sha": "ef9f880ba4dd24c3601ad732d08ef2b94e6a6038",
                         "installed_by": ["modules"]
                     },
                     "toulligqc": {
