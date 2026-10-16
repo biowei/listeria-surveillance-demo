@@ -1,6 +1,6 @@
 # Acceptance criteria — FROZEN BEFORE THE FIRST REAL RUN
 
-Status: **DRAFT** — values entered 2026-10-16; [verify] items open. Fill the `TBD` cells in milestone M3, commit, tag the commit
+Status: **DRAFT** — values sourced 2026-10-16; ready to freeze. Fill the `TBD` cells in milestone M3, commit, tag the commit
 `criteria-frozen`, and do not edit thresholds after that. A threshold chosen after
 seeing the data is a description, not a criterion. Later changes go in a dated
 amendment table at the bottom, with the reason.
@@ -90,16 +90,24 @@ Wilson 95% lower bound if every isolate in the arm is called correctly:
 | AC6 | Threshold robustness | outbreak membership unchanged for T−2 … T+2 | yes/no | SENS + SPEC | ReporTree `stableRegions` + sweep |
 | AC7 | Reproducibility | second run from the same commit gives identical cgMLST matrix (sha256) and partitions | identical | all | `results/rerun_check.csv` |
 
-### AC1 QC gates (an isolate must pass all six)
+### AC1 QC gates (an isolate must pass all five)
 
 | Gate | Threshold | Basis |
 |---|---|---|
-| Species check (Kraken2) | ≥ 90 % of classified reads *L. monocytogenes* | contamination gate **[verify: published Lm cut-off]** |
-| Total assembly length | 2.7–3.2 Mb | expected *L. monocytogenes* genome size **[verify: PulseNet/EFSA Lm range]** |
-| Contigs (≥ 500 bp) | ≤ 300 | short-read assembly sanity check **[verify]** |
-| N50 | ≥ 20 kb | as above **[verify]** |
-| Estimated depth after trimming | ≥ 20× | **[verify: PulseNet Lm minimum]**; one low-depth isolate shrinks the SNP core for all (Phase 0 §3d) |
-| cgMLST loci called | ≥ 95 % (≥ 1,661 of 1,748) | bounds the count-vs-proportion drift (below and Phase 0 §3b) |
+| Species check (Kraken2) | top species *L. monocytogenes*, and every other species < 1 % of classified reads | adapted from PulseNet 2.0's contamination gate (MIDAS secondary coverage < 1.0 %) [1]; a different tool, so the adaptation is ours |
+| Total assembly length | 2.8–3.19 Mb | PulseNet 2.0 *Lm* criteria [1] |
+| Contigs (≥ 500 bp) | ≤ 400 | Institut Pasteur BIGSdb *Listeria* genome quality criteria [2] |
+| Estimated depth after trimming | > 20× | PulseNet 2.0 (average de novo coverage > 20×) [1]; PulseNet PNQ07 target ≥ 20× [3]. One low-depth isolate shrinks the SNP core for every isolate (Phase 0 §3d) |
+| cgMLST loci called | > 95 % (≥ 1,661 of 1,748) | PulseNet 2.0 (> 95 % core-genome alleles called, same 1,748-locus scheme) [1]; also bounds the count-vs-proportion drift (below, Phase 0 §3b) |
+
+No N50 gate: neither PulseNet 2.0 nor Pasteur uses one, and no source was found.
+
+[1] Appendix to *Retrospective Analysis of Historical Listeria monocytogenes Clinical
+    Isolates, New York, USA, 2000–2021*. Emerg Infect Dis 2025;31(10).
+    doi:10.3201/eid3110.241876. Secondary source: it reports the PulseNet 2.0 QC criteria
+    but cites no primary QC document.
+[2] https://bigsdb.pasteur.fr/listeria/genomes-quality-criteria/ (accessed 2026-10-16).
+[3] PulseNet SOP PNQ07, Illumina MiSeq Data QC (effective 2015; may have been superseded).
 
 Frozen cgMLST threshold **T = 7 alleles**: Pasteur cgMLST1748, single linkage, ReporTree
 partition `MST-7x1.0`. Source: Moura A et al. *Nat Microbiol* 2016;2:16185, where 7 is a
@@ -108,12 +116,12 @@ among loci called in both profiles (Phase 0 §3b). At the AC1 floor of 1,661 sha
 7 mismatches is 0.421 %, so the drift from Moura's definition is at most ~0.4 alleles.
 
 Paired SNP threshold **S = 20 SNPs**: snippy-core alignment, snp-dists, single linkage.
-**[verify]** Source: common hqSNP practice for *L. monocytogenes* outbreak definition
-(e.g. Pightling et al. 2018, *Front Microbiol*) — primary source not yet checked. If no
-defensible source is found, S is not frozen and AC5 becomes descriptive.
-
-**Not frozen while any [verify] remains.** The `criteria-frozen` tag waits until each
-[verify] is replaced by a checked citation or the value is changed.
+Source: Pightling AW et al. *Front Microbiol* 2018;9:1482 (doi:10.3389/fmicb.2018.01482).
+In FDA CFSAN's framework, fewer than 21 SNPs *supports* a match, as one of three lines of
+evidence with tree topology and bootstrap support. The authors warn against SNP thresholds
+alone. Using it here as a single-linkage cut is our adaptation, not their cluster
+definition. S = 20 was drafted before Chen et al. 2016 was read (Phase 0 §5). Chen reports
+up to 42 SNPs within this outbreak, so AC5 may legitimately fail. S is not raised to fit.
 
 ## Amendments after freezing
 
