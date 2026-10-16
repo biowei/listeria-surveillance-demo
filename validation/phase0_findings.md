@@ -127,7 +127,12 @@ snippy-core → "snp-sites -c -o core.aln core.full.aln ... No SNPs were detecte
   low-coverage isolate shrinks the core for all isolates.** AC1's depth gate protects
   the SNP arm as well as the assembly.
 - **snippy-core exits 2 when there are no variant sites.** A test profile of 3 near-
-  identical outbreak isolates could hit this. Handle it in M4.
+  identical outbreak isolates could hit this. **Resolved in M4 (2026-10-16):** the
+  nf-core `snippy/core` module is patched (`snippy-core.diff`) to write a zero-length
+  core alignment only on the "No SNPs were detected" failure. Tested on this §3d data:
+  the no-SNP pair passes (snp-dists 0.8.2 gives all-zero distances); a pair with 5
+  introduced differences gives a 5-column core.aln as before; a genuine snippy-core
+  error (sample/reference contig mismatch) still fails the task.
 
 ## 4. Staged data
 - Timme runs (SENS + SPEC-T), staged 2026-10-16 with `bin/stage_reads.py fetch`
