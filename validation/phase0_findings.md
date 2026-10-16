@@ -41,7 +41,12 @@ cannot reproduce from this file does not belong in it.
   its own gzip of the reads, so the bytes differ from Timme's files. The ENA md5 is the
   integrity check; the Timme sha256 is recorded as information only
 - SPEC-A runs: not staged yet
-- BioSample collection dates available for: TBD / 31 (if not all, any epi curve uses dates marked `date_is_synthetic = 1`)
+- BioSample collection dates available for: **31 / 31** (`bin/build_metadata.py`, 2026-10-16):
+  27 to the day, 4 to the month only (the 4 CDC clinical isolates: 2014-05, 2014-07 ×2,
+  2014-08). All 26 outbreak food isolates carry the same date, 2014-07-31, so an epi
+  curve of the outbreak arm is one bar plus 2 clinical months. That is a property of
+  the public record, not something to smooth over. No date is synthetic yet (SPEC-A
+  isolates not added)
 
 ## 5. Outbreak typing and SNP clusters before any run (SENS only)
 Full commands, checksums and per-isolate table: `data/spec_a_query.md`, Part 1.
