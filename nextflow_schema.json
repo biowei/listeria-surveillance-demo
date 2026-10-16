@@ -118,6 +118,12 @@
                     "help_text": "See [Kraken2 homepage](https://benlangmead.github.io/aws-indexes/k2) for download\nlinks. Minikraken2 8GB is a reasonable choice, since we run Kraken here mainly just to check for\nsample purity.",
                     "description": "Path to Kraken2 database."
                 },
+                "kraken2_memory_mapping": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-memory",
+                    "description": "Run Kraken2 with --memory-mapping instead of loading the database into RAM.",
+                    "help_text": "Slower, but lets a database close to the available memory run (e.g. Standard-8 under an 8 GB Docker limit)."
+                },
                 "kmerfinderdb": {
                     "type": "string",
                     "description": "Path to the KmerFinder bacteria database (e.g. `/path_to/kmerfinder/`, `/path_to/kmerfinder/bacteria/` or `/path_to/kmerfinder/bacteria.tar.gz`). Only taxonomic group `bacteria` is supported. If a directory is provided, the pipeline auto-detects whether it already includes the `bacteria/` level. See installation guidelines: [https://bitbucket.org/genomicepidemiology/kmerfinder_db/src/master/](https://bitbucket.org/genomicepidemiology/kmerfinder_db/src/master/). Example: `--kmerfinderdb 'ftp://ftp.cbs.dtu.dk/public/CGE/databases/KmerFinder/version/latest/bacteria.tar.gz'` (FTP download is ~30GB and can be slow; prefer pre-downloading and passing a local `.tar.gz`). Older version: [https://zenodo.org/records/13447056/files/20190108_kmerfinder_stable_dirs.tar.gz](https://zenodo.org/records/13447056/files/20190108_kmerfinder_stable_dirs.tar.gz)."
