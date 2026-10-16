@@ -164,3 +164,17 @@ Full commands, checksums and per-isolate table: `data/spec_a_query.md`, Part 1.
   epidemiologically confirmed outbreak in a single cluster. This says nothing yet about
   cgMLST at the frozen threshold. It is noted here so that the AC3 result cannot be read
   as a surprise in either direction.
+- Raw read depth of the SENS isolates (pre-run input, before trimming; 2026-10-16):
+  read pairs × 2 × mean read length of the first 1,000 reads per mate ÷ 2.95 Mb, from
+  `data/staging_manifest.tsv` and `data/fastq/`.
+  PDS000024956 (6): CFSAN023466 28×, CFSAN023467 34×, PNUSAL001024 104×, MOD1_LS1005 121×,
+  MOD1_LS1000 141×, MOD1_LS995 256×. PDS000024934 (21): min 34×, median 150×, max 260×.
+  MOD1_LS994 (not in PD): 124×. Lowest SENS: CFSAN023466 28×, CFSAN023467 34×, CFSAN023468 34×.
+  - Hypothesis considered: low depth explains the outbreak's split across two SNP clusters.
+    **Not supported as a general explanation.** 4 of the 6 in PDS000024956 have
+    104–256×, and CFSAN023468 (34×) is in PDS000024934. At most it may contribute for
+    CFSAN023466 and CFSAN023467. Recorded before any run. Not used to choose S or the
+    AC1 depth gate.
+  - Consequence for AC1: CFSAN023466 is a SENS isolate at 28× raw. A depth gate between
+    28× and the post-trim depth could remove it before the run, making AC3 27/28
+    assessable. The gate is set from its source, not from this list.
