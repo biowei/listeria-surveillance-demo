@@ -36,12 +36,97 @@ cannot reproduce from this file does not belong in it.
   question in `docs/question.md`) are a separate matter, checked in §3.
 
 ## 3. Tool behaviour checks (small synthetic inputs, one behaviour each)
+Run 2026-10-16. Containers: chewBBACA 3.3.10 (`sha256:73194701…7fe4cea3525fe7d95`),
+ReporTree **v2.6.0** (`insapathogenomics/reportree@sha256:061a2538173c7419a58d429186f239aac235735d701b2390b882a5d8738fe23f`),
+snippy 4.6.0 (`quay.io/biocontainers/snippy@sha256:8d1589ab60af6a9dac53dd069b71fdffc2d6530047e4b9742b59a89fbe2a5b70`,
+the nf-core `snippy/run` and `snippy/core` pin).
+
 | Check | Input | Expected | Observed | Note |
 |---|---|---|---|---|
-| chewBBACA missing-data classes → 0 after ExtractCgMLST --t 0 | 2 assemblies, one truncated | missing loci become 0 | TBD | |
-| ReporTree treats 0 as missing, not as an allele | toy matrix | distance ignores 0 | TBD | |
-| ReporTree partition column naming | toy run | `MST-<t>x1.0`? | TBD | update PARTITION_PATTERN |
-| snippy-core: positions with low coverage | — | masked/`-`? | TBD | |
+| chewBBACA missing-data classes → 0 after ExtractCgMLST --t 0 | 2 assemblies, one truncated | missing loci become 0 | **Yes**: LNF, ASM, ALM, NIPH → `0`. But `INF-x` → `x` | inferred alleles are kept, see 3a |
+| ReporTree treats 0 as missing, not as an allele | toy matrix | distance ignores 0 | **Yes**, and distance is a **count**, not a proportion | see 3b; matters for the 7-allele threshold |
+| ReporTree partition column naming | toy run | `MST-<t>x1.0`? | **`MST-<t>x1.0`** (grapetree); `single-<t>x1.0` (HC). Partitions file's sample column is **`sequence`** | `PARTITION_PATTERN` matches grapetree; see 3c |
+| snippy-core: positions with low coverage | real reads at full and ~4% depth vs a 100 kb reference | masked/`-`? | `N` below min. coverage, `-` at zero coverage, `n` for mixed; all dropped from `core.aln` | see 3d |
+
+### 3a. chewBBACA AlleleCall + ExtractCgMLST
+Input: GCA_001257525.1 (`full`, 2,916,995 bp, 36 contigs) and its first 1,458,497 bp (`half`).
+
+```
+chewBBACA.py AlleleCall -i genomes -g <schema copy> -o ac --no-inferred --cpu 6
+chewBBACA.py ExtractCgMLST -i ac/results_alleles.tsv -o cg --t 0
+results_statistics.tsv:  full  EXC 1651  INF 86  NIPH 7  ALM 1  ASM 2  LNF 1
+                         half  EXC 899   INF 2   ALM 1  ASM 1  LNF 845
+cgMLST0.tsv: 1,748 loci; full 11 zeros, half 847 zeros
+class → cgMLST0 value (half): LNF→0 (845), ALM→0, ASM→0, INF-716→716, INF-881→881
+```
+
+- Missing classes become `0` as expected.
+- **`--no-inferred` stops the schema from growing, but inferred alleles still appear in the
+  results.** `INF-x` becomes the integer `x` in `cgMLST0.tsv`. Within one run the IDs are
+  consistent: 45 novel alleles were `INF-x` in `full` and the plain `x` in `half`, the same
+  allele. The IDs are not stable across runs with different isolates, so matrices from
+  different runs must not be merged. AC7 compares two runs with identical inputs, which
+  is fine.
+- **AlleleCall writes into the schema directory on first use, even with `--no-inferred`**:
+  `loci_modes` and `pre_computed/` (14 files), plus a file in `short/`. With a read-only
+  mount it fails (`OSError: [Errno 30] Read-only file system: '/schema/loci_modes'`).
+  Nextflow stages inputs as symlinks, so a pipeline run would modify the canonical schema.
+  M4 must handle this, for example by pre-computing once and checksumming the schema
+  afterwards, or by staging a copy.
+- 2 loci were NIPH in `full` and exact in `half` (the second copy of a paralogue was in
+  the removed half).
+
+### 3b. ReporTree: missing data and distance
+Toy matrix, 6 loci (`0` = missing):
+
+```
+S1 1 1 1 1 1 1 | S2 1 1 1 1 1 2 | S3 0 0 1 1 1 1 | S4 2 2 2 2 2 2 | S5 1 1 1 1 2 2
+reportree.py -a matrix.tsv -m meta.tsv --analysis grapetree --method MSTreeV2 -thr 0-3 -out gt
+→ partitioning_grapetree.py ... --missing 0 --site-inclusion 0.0 --loci-called 0.0 --missing-code 0
+gt_dist_hamming.tsv: S1–S3 0, S3–S4 4, S1–S4 6
+MST-0x1.0: S1 + S3 cluster_1; S2, S5, S4 singletons
+MST-1x1.0: S1, S2, S3, S5 cluster_1 (S5 joins through S2: single linkage); S4 singleton
+```
+
+- `0` is treated as missing: S1–S3 = 0. It would be 2 if `0` were an allele.
+- **The distance is the number of differing loci among loci called in both, not
+  scaled.** S3–S4 = 4 (4 shared loci), not 6. Moura 2016 defines the threshold on the
+  *proportion* (7/1,748 = 0.400 %). Under a count, a profile with uncalled loci looks
+  closer than it would under Moura's proportion. The difference is small when nearly all
+  loci are called, and grows with missing data. AC1's loci-called gate is what keeps it
+  small; this belongs with the T decision in M3.
+- Default filters are off (`--site-inclusion 0.0`, `--loci-called 0.0`): no locus or
+  sample is dropped unless set.
+- MSTreeV2's own matrix (`gt_dist_grapetree.tsv`) is asymmetric where data are missing
+  (S3→S1 2.0, S1→S3 0.0). Partitions follow the MST; cite `gt_dist_hamming.tsv` for
+  pairwise counts.
+
+### 3c. ReporTree partition naming
+`gt_partitions.tsv` header: `sequence  MST-0x1.0  MST-1x1.0  MST-2x1.0  MST-3x1.0`
+(HC: `single-0x1.0 …`). `PARTITION_PATTERN = r"^MST-(\d+)x"` matches grapetree output.
+The sample column is **`sequence`** in `*_partitions.tsv`, but `sample` in
+`*_metadata_w_partitions.tsv`. `sweep()`'s default `sample_col="sample"` only fits the
+second file.
+
+### 3d. snippy / snippy-core
+Reference: first 100 kb of contig LHSD01000001.1 (GCA_001257525.1). Reads: SRR1553826
+(the same isolate), full depth, and `seqtk sample -s 11 … 0.04`.
+
+```
+core.txt   ID    ALIGNED  UNALIGNED  HET  LOWCOV
+           full  99793    0          207  0
+           low   5506     2656       32   91806
+core.full.aln characters: full  ACGT 99,793  n 207
+                          low   ACGT 5,506   N 91,806   - 2,656   n 32
+snippy-core → "snp-sites -c -o core.aln core.full.aln ... No SNPs were detected"; exit 2
+```
+
+- Below minimum coverage (snippy default 10×) → `N`; zero coverage → `-`; mixed → `n`.
+- `snp-sites -c` keeps only columns that are A/C/G/T in **every** sample. **One
+  low-coverage isolate shrinks the core for all isolates.** AC1's depth gate protects
+  the SNP arm as well as the assembly.
+- **snippy-core exits 2 when there are no variant sites.** A test profile of 3 near-
+  identical outbreak isolates could hit this. Handle it in M4.
 
 ## 4. Staged data
 - Timme runs (SENS + SPEC-T), staged 2026-10-16 with `bin/stage_reads.py fetch`
