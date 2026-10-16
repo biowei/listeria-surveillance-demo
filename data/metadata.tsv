@@ -30,3 +30,8 @@ CFSAN023470	SAMN03002790	SRR1556297	Listeria monocytogenes	2014-07-31	0	USA			Un
 CFSAN023471	SAMN03002791	SRR1556295	Listeria monocytogenes	2014-07-31	0	USA			United States Food and Drug Administration| Center for Food Safety and Applied Nutrition			FDA/CFSAN	Timme2017_1408MLGX6-3WGS	1	peach	food
 PNUSAL000957	SAMN03013698	SRR1562157	Listeria monocytogenes	2014-07	0	USA		CDC				CDC	Timme2017_1408MLGX6-3WGS	0	blood	human
 PNUSAL001024	SAMN03093481	SRR1597487	Listeria monocytogenes	2014-08	0	USA		CDC				Centers for Disease Control and Prevention	Timme2017_1408MLGX6-3WGS	1	blood	human
+SAMN13910650	SAMN13910650	SRR10958856	Listeria monocytogenes	2014-07	0	United Kingdom	United Kingdom	PHE				Public Health England	NCBI_PD_PDG000000001.4942	0	human	
+SAMN13910668	SAMN13910668	SRR10958900	Listeria monocytogenes	2014-06	0	United Kingdom	United Kingdom	PHE				Public Health England	NCBI_PD_PDG000000001.4942	0	human	
+SAMN14163152	SAMN14163152	SRR11144656	Listeria monocytogenes	2016-03-08	0	USA		United States Food and Drug Administration	United States Food and Drug Administration| Center for Food Safety and Applied Nutrition			FDA Center for Food Safety and Applied Nutrition	NCBI_PD_PDG000000001.4942	0	water sediment	environmental
+SAMN14164734	SAMN14164734	SRR11146857	Listeria monocytogenes	2016-01-06	0	USA		United States Food and Drug Administration	United States Food and Drug Administration| Center for Food Safety and Applied Nutrition			FDA Center for Food Safety and Applied Nutrition	NCBI_PD_PDG000000001.4942	0	water sediment	environmental
+SAMN19761656	SAMN19761656	SRR14850044	Listeria monocytogenes	2011-05	0	USA	NY	NYSDOH	New York State Department of Health			PulseNet Next Generation Subtyping Methods Unit	NCBI_PD_PDG000000001.4942	0		human
