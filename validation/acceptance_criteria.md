@@ -1,9 +1,9 @@
 # Acceptance criteria — FROZEN BEFORE THE FIRST REAL RUN
 
-Status: **DRAFT** — values sourced 2026-10-16; ready to freeze. Fill the `TBD` cells in milestone M3, commit, tag the commit
-`criteria-frozen`, and do not edit thresholds after that. A threshold chosen after
-seeing the data is a description, not a criterion. Later changes go in a dated
-amendment table at the bottom, with the reason.
+Status: **FROZEN** 2026-10-16, git tag `criteria-frozen`, before any real pipeline run.
+Do not edit thresholds after this point. A threshold chosen after seeing the data is a
+description, not a criterion. Later changes go in the dated amendment table at the
+bottom, with the reason, and Wei decides.
 
 **Standing limitation:** a retrospective package on public benchmark data at these
 sample sizes shows the pipeline recovers one known event. It does not substitute for
