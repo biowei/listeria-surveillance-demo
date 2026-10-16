@@ -178,3 +178,11 @@ Full commands, checksums and per-isolate table: `data/spec_a_query.md`, Part 1.
   - Consequence for AC1: CFSAN023466 is a SENS isolate at 28× raw. A depth gate between
     28× and the post-trim depth could remove it before the run, making AC3 27/28
     assessable. The gate is set from its source, not from this list.
+- Prior expectation from the literature (recorded 2026-10-16, before any run): Chen Y
+  et al. *Appl Environ Microbiol* 2016;82:7030–40 (doi:10.1128/AEM.01486-16) studied this
+  outbreak (2014 stone fruit; R. Timme co-author). Outbreak-associated isolates were
+  serotype IVb-v1, all ST382, and differed by up to 42 SNPs (CFSAN SNP pipeline). A
+  separate serotype 1/2b, CC5 cluster (up to 17 SNPs) came from the fruit and packing
+  environment. Consequences: a single-linkage S = 20 may or may not hold all 28 SENS
+  isolates together. AC2 will show whether any of the 28 is not ST382. This
+  expectation was not used to choose S.
