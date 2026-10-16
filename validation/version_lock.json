@@ -3,12 +3,33 @@
   "pipeline_commit": "TBD",
   "nextflow_version": "TBD",
   "containers": {
+    "chewbbaca": {
+      "image": "quay.io/biocontainers/chewbbaca:3.3.10--pyhdfd78af_0",
+      "digest": "sha256:7319470168718affb429d4dab8bd78834dd31ceea576917afe4cea3525fe7d95",
+      "pinned": "2026-10-16",
+      "used_for": "PrepExternalSchema (schema prep) and AlleleCall/ExtractCgMLST; same version the nf-core chewbbaca/allelecall module pins",
+      "note": "Behaviour checked in phase0_findings.md §2 and §3a."
+    },
+    "mlst_spec_a_selection": {
+      "image": "staphb/mlst:2.35.0",
+      "digest": "sha256:d11a9ea089158c8648852f44ea7de495ea60001acb9850127b73b904e7c73642",
+      "pinned": "2026-10-16",
+      "used_for": "SPEC-A selection rule (acceptance_criteria.md, typing step) and outbreak CC lookup only; not the pipeline's MLST step, which is pinned separately in M4",
+      "note": "Scheme listeria_2; see data/spec_a_query.md."
+    },
     "reportree": {
       "image": "insapathogenomics/reportree:v2.6.0",
       "digest": "sha256:061a2538173c7419a58d429186f239aac235735d701b2390b882a5d8738fe23f",
       "release": "v2.6.0 (2025-10-22)",
       "pinned": "2026-10-16",
       "note": "v2.6.1 named in early docs does not exist; v2.7.0 (2026-09-25) had no container when pinned. Behaviour checked in phase0_findings.md §3b-3c."
+    },
+    "snippy": {
+      "image": "quay.io/biocontainers/snippy:4.6.0--hdfd78af_2",
+      "digest": "sha256:8d1589ab60af6a9dac53dd069b71fdffc2d6530047e4b9742b59a89fbe2a5b70",
+      "pinned": "2026-10-16",
+      "used_for": "snippy and snippy-core; same version the nf-core snippy/run and snippy/core modules pin",
+      "note": "Behaviour checked in phase0_findings.md §3d."
     }
   },
   "databases": {
