@@ -51,7 +51,18 @@
       "precomputed": "2026-10-16 with bin/precompute_schema.sh (AlleleCall on GCA_001257525.1, rw), which added loci_modes and pre_computed/. A second AlleleCall (GCA_001257505.1) on a read-only mount succeeded and left the tree checksum unchanged. Per-file list: data/schema/pasteur_cgmlst1748_chewie_files_precomputed.sha256."
     },
     "amrfinderplus_db": "TBD",
-    "mlst_db": "TBD",
+    "mlst_db": {
+      "container": "quay.io/biocontainers/mlst:2.25.0--hdfd78af_0",
+      "digest": "sha256:e3da7ad580fae661251d1f62d505789a7c353bc83be8850e603516468daaa153",
+      "used_for": "pipeline MLST step (nf-core mlst module); the database is bundled in the image, so the digest pins it",
+      "scheme": "listeria_2 (Pasteur 7-locus MLST)",
+      "database_version": "2025-10-28 (pubmlst/listeria_2/database_version.txt)",
+      "profiles_sha256": "b48174f6f7dfcc4f3049bfca7e12aaa1ba3f1cb6e64305b3c96fd93c9c7d398f",
+      "profiles": "3,379 STs, highest ST3431",
+      "st382": "1-51-11-13-2-5-5 -> CC183, lineage I",
+      "pinned": "2026-10-16",
+      "note": "Differs from the SPEC-A selection image (staphb/mlst:2.35.0: listeria_2 downloaded 2026-03-11 from Pasteur, 3,285 STs, highest ST3335, profiles sha256 6b555fe9...498d). Both give ST382 the same profile and CC183. STs above 3335 exist only in this pipeline database; AC2 reports the database version."
+    },
     "snippy_reference": {
       "accession": "GCA_001047715.1",
       "sequence": "CP012021.1 (ASM104771v1), Listeria monocytogenes CFSAN023463, 2,939,733 bp",
