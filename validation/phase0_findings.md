@@ -12,12 +12,28 @@ cannot reproduce from this file does not belong in it.
 - Downloaded file sha256: TBD — matches sheet? TBD
 
 ## 2. cgMLST schema
-- Source (Chewie-NS DownloadSchema or PrepExternalSchema from the Pasteur scheme): TBD
-- Number of loci after preparation: TBD (compare with the published locus count)
+- Source: **Pasteur cgMLST1748** (BIGSdb `pubmlst_listeria_seqdef`, scheme 3), downloaded
+  2026-10-16 with `bin/fetch_bigsdb_scheme.py` (commit 7d86979): 1,748/1,748 loci,
+  1,381,390 alleles, headers and ACGT checked per file. Per-locus allele counts and
+  sha256: `data/schema/pasteur_cgmlst1748_raw_download.tsv` (not committed; sha256
+  `d2621eeeee2b27a94e91e30931b30f7e7836624f39a0eec77e335a5c9ce8fe65`).
+  Pasteur is the scheme the 7-allele threshold was calibrated on (`docs/question.md`).
 - Published locus count of the Pasteur scheme: **1,748** (2026-10-16:
   `curl -sS https://bigsdb.pasteur.fr/api/db/pubmlst_listeria_seqdef/schemes/3` →
   description `cgMLST1748`, `locus_count` 1748)
-- Prodigal training file used: TBD
+- Prepared with `chewBBACA.py PrepExternalSchema` 3.3.10
+  (`quay.io/biocontainers/chewbbaca@sha256:7319470168718affb429d4dab8bd78834dd31ceea576917afe4cea3525fe7d95`,
+  the version the nf-core `chewbbaca/allelecall` module pins), BSR 0.6 (default),
+  translation table 11, **no `--size-filter`**, `--cpu 6`; 10 min. Log: `data/schema_prep.log`.
+- Number of loci after preparation: **1,748 / 1,748** (matches the published count).
+  Invalid loci: 0. Invalid alleles: 0. Valid alleles: 1,381,390 (all of them).
+  Representative alleles: 1,920 (1–12 per locus).
+- Prodigal training file used: `Listeria_monocytogenes.trn` bundled with chewBBACA 3.3.10
+  (`CHEWBBACA/prodigal_training_files/`), sha256
+  `6d5824e9aecf8b72bcf38c70bb9d2a3c11d77a7fb5ffee35d8995f4bc467aced`; copied into the schema.
+- Consequence: no locus was lost in preparation, so the 7-allele threshold applies to
+  the scheme it was calibrated on. Loci *uncalled* in a given genome (the missing-data
+  question in `docs/question.md`) are a separate matter, checked in §3.
 
 ## 3. Tool behaviour checks (small synthetic inputs, one behaviour each)
 | Check | Input | Expected | Observed | Note |
