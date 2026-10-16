@@ -28,14 +28,33 @@ or removed by judgement.
    the public GenBank assemblies of three SENS isolates (GCA_001257525.1,
    GCA_001257505.1, GCA_001257515.1; all ST382) plus the ST→CC table of the Pasteur
    BIGSdb scheme. If those isolates disagree on CC, stop and amend.
-3. **Include:** *L. monocytogenes*; ST in that CC; at least one SRA run that is Illumina
-   paired-end; collection year 2010–2016.
-4. **Exclude:** any isolate in the Timme sheet; any isolate in the outbreak's SNP
-   cluster(s) **PDS000024934 and PDS000024956** (taken from the 28 SENS isolates); any
-   isolate not assigned to a SNP cluster.
-5. **One per SNP cluster.** Keep only the lowest-accession isolate in each SNP cluster,
-   so that specificity isn't inflated by near-duplicate isolates.
-6. **Order and size.** Sort by BioSample accession, ascending, and take the first N = 40.
+3. **Metadata filter** (snapshot files only, no network). Keep isolates that:
+   - are not in the Timme sheet;
+   - have a SNP cluster in `reference_target.cluster_list.tsv` that is neither
+     **PDS000024934** nor **PDS000024956** (the outbreak's clusters, taken from the 28
+     SENS isolates);
+   - have a `collection_date` whose first four characters are a year from 2010 to 2016
+     (a year-month or year alone counts; missing or unparseable dates are excluded);
+   - have a non-empty `asm_acc` and at least one SRA run in `Run`.
+4. **Selection loop.** Sort the survivors by BioSample accession, ascending, and walk
+   down the list. For each isolate:
+   a. skip it if an isolate from its SNP cluster has already been selected;
+   b. **sequencing check:** its first SRA run in `Run` must be ILLUMINA and PAIRED in the
+      ENA catalogue (`instrument_platform`, `library_layout`); otherwise skip it;
+   c. **typing:** run `mlst --scheme listeria_2` on its `asm_acc` assembly with
+      `staphb/mlst:2.35.0` (digest
+      `sha256:d11a9ea089158c8648852f44ea7de495ea60001acb9850127b73b904e7c73642`). Map the
+      ST to a CC with the Pasteur BIGSdb API (`pubmlst_listeria_seqdef`, scheme 2). Keep
+      the isolate only if the ST is exactly assigned and its CC is CC183; a novel or
+      partial ST, or an ST without a CC, is skipped;
+   d. select it.
+   Stop when 40 isolates are selected. Walking the sorted list and keeping the first
+   CC183 isolate per cluster gives the same result as typing every candidate, then
+   keeping the lowest accession per cluster and taking the first 40. It only types fewer.
+5. **One per SNP cluster** is enforced by 4a, so specificity is not inflated by
+   near-duplicate isolates.
+6. **Size.** N = 40. If the list runs out before 40, stop and report the shortfall;
+   do not widen any filter without a dated amendment.
 7. **Replacement.** An isolate that fails staging (md5, read count or pairing) or AC1 QC
    is replaced by the next isolate in the sorted list. Every replacement is logged with
    its reason. AC4's denominator is the isolates that passed QC, and that number is
