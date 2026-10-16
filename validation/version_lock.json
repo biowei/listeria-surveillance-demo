@@ -45,8 +45,10 @@
       "invalid_alleles": 0,
       "training_file": "Listeria_monocytogenes.trn bundled with chewBBACA 3.3.10, sha256 6d5824e9aecf8b72bcf38c70bb9d2a3c11d77a7fb5ffee35d8995f4bc467aced",
       "prepared_tree_sha256": "26b4440dde44afd3366fc1420b575e6e3ca7ba5d6aaef56b5be58f8e07a74271",
-      "prepared_tree_note": "sha256 of data/schema/pasteur_cgmlst1748_chewie_files.sha256 (per-file sha256 of all 3,499 files, LC_ALL=C sorted paths), taken before any AlleleCall. AlleleCall adds loci_modes and pre_computed/ on first use (phase0_findings.md §3a), so recompute after the M4 pre-compute step and record both.",
-      "details": "validation/phase0_findings.md §2"
+      "prepared_tree_note": "sha256 of data/schema/pasteur_cgmlst1748_chewie_files.sha256 (per-file sha256 of all 3,499 files, LC_ALL=C sorted paths), taken before any AlleleCall. AlleleCall adds loci_modes and pre_computed/ on first use (phase0_findings.md §3a), recomputed after pre-compute: see precomputed_tree_sha256. Pipeline runs use the pre-computed schema.",
+      "details": "validation/phase0_findings.md §2",
+      "precomputed_tree_sha256": "5e961048d6a0a0bf0f2cf642f7aa3d09bf6719b2e5e51e041b37976d9671e4a0",
+      "precomputed": "2026-10-16 with bin/precompute_schema.sh (AlleleCall on GCA_001257525.1, rw), which added loci_modes and pre_computed/. A second AlleleCall (GCA_001257505.1) on a read-only mount succeeded and left the tree checksum unchanged. Per-file list: data/schema/pasteur_cgmlst1748_chewie_files_precomputed.sha256."
     },
     "amrfinderplus_db": "TBD",
     "mlst_db": "TBD"

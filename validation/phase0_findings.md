@@ -71,8 +71,9 @@ class → cgMLST0 value (half): LNF→0 (845), ALM→0, ASM→0, INF-716→716, 
   `loci_modes` and `pre_computed/` (14 files), plus a file in `short/`. With a read-only
   mount it fails (`OSError: [Errno 30] Read-only file system: '/schema/loci_modes'`).
   Nextflow stages inputs as symlinks, so a pipeline run would modify the canonical schema.
-  M4 must handle this, for example by pre-computing once and checksumming the schema
-  afterwards, or by staging a copy.
+  **Resolved in M4 (2026-10-16):** `bin/precompute_schema.sh` ran AlleleCall once
+  (read-write), then again on a read-only mount: the second call succeeded and the tree
+  checksum stayed `5e961048…71e4a0`. Pipeline runs use the pre-computed schema.
 - 2 loci were NIPH in `full` and exact in `half` (the second copy of a paralogue was in
   the removed half).
 
