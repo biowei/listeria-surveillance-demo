@@ -195,7 +195,8 @@
                     "snippy/core": {
                         "branch": "master",
                         "git_sha": "2a0a771d78bb58205c784dea56f2e4db251a63ec",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/snippy/core/snippy-core.diff"
                     },
                     "snippy/run": {
                         "branch": "master",

@@ -38,12 +38,24 @@ process SNIPPY_CORE {
     find . -name "*.vcf" | sed 's/\\.vcf\$//' | xargs -I {} bash -c 'cp -L {}.vcf samples/{}/{}.vcf'
     find . -name "*.aligned.fa" | sed 's/\\.aligned.fa\$//' | xargs -I {} bash -c 'cp -L {}.aligned.fa samples/{}/{}.aligned.fa'
 
-    # Run snippy-core
+    # Run snippy-core. It exits non-zero when snp-sites finds no variant sites
+    # (identical samples), leaving no core.aln. Only in that case, write a zero-length
+    # core alignment so snp-dists reports all-zero distances; any other failure fails.
+    set +e
     snippy-core \\
         $args \\
         --ref $reference_name \\
         --prefix $prefix \\
-        samples/*
+        samples/* 2>&1 | tee snippy-core.log
+    status=\${PIPESTATUS[0]}
+    set -e
+    if [ \$status -ne 0 ]; then
+        if grep -q "No SNPs were detected" snippy-core.log && [ -s ${prefix}.full.aln ]; then
+            awk '/^>/{print; print ""}' ${prefix}.full.aln > ${prefix}.aln
+        else
+            exit \$status
+        fi
+    fi
     """
 
     stub:
