@@ -74,13 +74,45 @@ with every snapshot, so the rule cites the accession without its version.
 
 ## Part 2 — candidate query (after the rule is complete and committed)
 
-Rule commit: TBD
+Rule commit: d5f3561 (steps 4–5 as amended); script `bin/select_spec_a.py` at 20488a7.
 
 History before the final rule (2026-10-16): the first executable version of the rule
 (commit e848d50) walked the 17,638 step-3 survivors one at a time and typed each one.
 It was stopped after 13 isolates (~36 s each; a full walk was estimated at ~7 days).
 Those 13 typed as CC1, CC3, CC6, CC7, CC14, CC87 and CC89, none CC183. No CC183
 candidate had been viewed when steps 4–5 were amended to type one isolate per cluster.
-Filters applied, in rule order, with the count left after each: TBD
-Selected 40 (BioSample, run, PDS): TBD → appended to `data/runs.tsv` as `arm = SPEC-A`
+
+### Run of 2026-10-16 (snapshot PDG000000001.4942)
+
+Filters applied, in rule order, with the count left after each:
+
+| Step | Kept |
+|---|---|
+| BioSamples in snapshot | 85,527 |
+| not in the Timme sheet | 85,497 |
+| in a SNP cluster | 73,153 |
+| not in PDS000024934 / PDS000024956 | 72,410 |
+| collection year 2010–2016 | 21,822 |
+| `asm_acc` and an SRA run present | 17,638 (in 2,674 SNP clusters) |
+| excluded: BioSample in two SNP clusters (no rule covers it) | 1 (SAMEA104485064) |
+| step 4: clusters with a CC | 2,661; 13 excluded (no exact ST in 3 tries) |
+| step 4: **CC183 clusters** | **5** |
+| step 5: selected | **5** (3 skipped as cluster already taken; 0 failed the 5c confirmation) |
+
+Per-cluster and per-isolate evidence: `data/spec_a_clusters.tsv`, `data/spec_a_selection.tsv`.
+
+Selected (BioSample, run, PDS, ST):
+
+| BioSample | Run | PDS | ST |
+|---|---|---|---|
+| SAMN13910650 | SRR10958856 | PDS000055841 | 382 |
+| SAMN13910668 | SRR10958900 | PDS000070289 | 382 |
+| SAMN14163152 | SRR11144656 | PDS000058433 | 2126 |
+| SAMN14164734 | SRR11146857 | PDS000058447 | 382 |
+| SAMN19761656 | SRR14850044 | PDS000237798 | 382 |
+
+**Outcome: SHORTFALL, 5 of 40** (rule step 6: stop and report, widen nothing). Not yet
+appended to `data/runs.tsv`; what to do with the shortfall is an amendment decision.
+4 of the 5 are ST382, the outbreak's own ST, in SNP clusters different from the outbreak's.
+
 Replacements (isolate, reason, replacement): none yet
