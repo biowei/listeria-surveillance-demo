@@ -36,23 +36,28 @@ or removed by judgement.
    - have a `collection_date` whose first four characters are a year from 2010 to 2016
      (a year-month or year alone counts; missing or unparseable dates are excluded);
    - have a non-empty `asm_acc` and at least one SRA run in `Run`.
-4. **Selection loop.** Sort the survivors by BioSample accession, ascending, and walk
-   down the list. For each isolate:
-   a. skip it if an isolate from its SNP cluster has already been selected;
+
+   **Typing** (used in steps 4 and 5): `mlst --scheme listeria_2` on the `asm_acc` assembly
+   with `staphb/mlst:2.35.0` (digest
+   `sha256:d11a9ea089158c8648852f44ea7de495ea60001acb9850127b73b904e7c73642`); ST → CC with
+   the Pasteur BIGSdb API (`pubmlst_listeria_seqdef`, scheme 2). A result counts only if
+   the ST is exactly assigned and has a CC.
+4. **Cluster CC.** **Assumption, stated as such:** a Pathogen Detection SNP cluster does not
+   span clonal complexes. Clusters are single-linkage at about 50 SNPs; CCs differ by
+   thousands. For each SNP cluster among the survivors, type its survivors in ascending
+   BioSample order until one gives a result that counts, trying at most 3. That result is
+   the cluster's CC. A cluster with no counting result in 3 tries is excluded and listed.
+   Only clusters whose CC is CC183 go on to step 5.
+5. **Selection walk.** Sort the survivors in CC183 clusters by BioSample accession,
+   ascending, and walk down the list. For each isolate:
+   a. skip it if an isolate from its SNP cluster has already been selected (one per
+      cluster, so near-duplicates don't inflate specificity);
    b. **sequencing check:** its first SRA run in `Run` must be ILLUMINA and PAIRED in the
       ENA catalogue (`instrument_platform`, `library_layout`); otherwise skip it;
-   c. **typing:** run `mlst --scheme listeria_2` on its `asm_acc` assembly with
-      `staphb/mlst:2.35.0` (digest
-      `sha256:d11a9ea089158c8648852f44ea7de495ea60001acb9850127b73b904e7c73642`). Map the
-      ST to a CC with the Pasteur BIGSdb API (`pubmlst_listeria_seqdef`, scheme 2). Keep
-      the isolate only if the ST is exactly assigned and its CC is CC183; a novel or
-      partial ST, or an ST without a CC, is skipped;
+   c. **confirm:** type the isolate itself. It must count and be CC183, otherwise skip it
+      and record it as evidence against the assumption in step 4;
    d. select it.
-   Stop when 40 isolates are selected. Walking the sorted list and keeping the first
-   CC183 isolate per cluster gives the same result as typing every candidate, then
-   keeping the lowest accession per cluster and taking the first 40. It only types fewer.
-5. **One per SNP cluster** is enforced by 4a, so specificity is not inflated by
-   near-duplicate isolates.
+   Stop when 40 isolates are selected.
 6. **Size.** N = 40. If the list runs out before 40, stop and report the shortfall;
    do not widen any filter without a dated amendment.
 7. **Replacement.** An isolate that fails staging (md5, read count or pairing) or AC1 QC

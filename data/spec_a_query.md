@@ -75,6 +75,12 @@ with every snapshot, so the rule cites the accession without its version.
 ## Part 2 — candidate query (after the rule is complete and committed)
 
 Rule commit: TBD
+
+History before the final rule (2026-10-16): the first executable version of the rule
+(commit e848d50) walked the 17,638 step-3 survivors one at a time and typed each one.
+It was stopped after 13 isolates (~36 s each; a full walk was estimated at ~7 days).
+Those 13 typed as CC1, CC3, CC6, CC7, CC14, CC87 and CC89, none CC183. No CC183
+candidate had been viewed when steps 4–5 were amended to type one isolate per cluster.
 Filters applied, in rule order, with the count left after each: TBD
 Selected 40 (BioSample, run, PDS): TBD → appended to `data/runs.tsv` as `arm = SPEC-A`
 Replacements (isolate, reason, replacement): none yet
