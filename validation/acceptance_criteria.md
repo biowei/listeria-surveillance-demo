@@ -22,16 +22,17 @@ commit that adds this rule is its timestamp). Applied mechanically; no isolate i
 or removed by judgement.
 
 1. **Source.** NCBI Pathogen Detection, *Listeria* isolate browser, snapshot
-   `PDG<accession.version>` current on the query date. Query and date are recorded in
+   `PDG000000001.4942` (current on 2026-10-16). Query and date are recorded in
    `data/spec_a_query.md`.
-2. **Clonal complex.** CC = **<CC>**: the CC of the outbreak strain, from `mlst` on
-   **<2–3 named outbreak runs>** plus the ST→CC table of the Pasteur BIGSdb scheme. If
-   those isolates disagree on CC, stop and amend.
+2. **Clonal complex.** CC = **CC183**: the CC of the outbreak strain, from `mlst` on
+   the public GenBank assemblies of three SENS isolates (GCA_001257525.1,
+   GCA_001257505.1, GCA_001257515.1; all ST382) plus the ST→CC table of the Pasteur
+   BIGSdb scheme. If those isolates disagree on CC, stop and amend.
 3. **Include:** *L. monocytogenes*; ST in that CC; at least one SRA run that is Illumina
    paired-end; collection year 2010–2016.
 4. **Exclude:** any isolate in the Timme sheet; any isolate in the outbreak's SNP
-   cluster(s) **<PDSxxxx>** (taken from the 28 SENS isolates); any isolate not assigned to
-   a SNP cluster.
+   cluster(s) **PDS000024934 and PDS000024956** (taken from the 28 SENS isolates); any
+   isolate not assigned to a SNP cluster.
 5. **One per SNP cluster.** Keep only the lowest-accession isolate in each SNP cluster,
    so that specificity isn't inflated by near-duplicate isolates.
 6. **Order and size.** Sort by BioSample accession, ascending, and take the first N = 40.
