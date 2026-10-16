@@ -1,6 +1,6 @@
 # Acceptance criteria — FROZEN BEFORE THE FIRST REAL RUN
 
-Status: **DRAFT** — fill the `TBD` cells in milestone M3, commit, tag the commit
+Status: **DRAFT** — values entered 2026-10-16; [verify] items open. Fill the `TBD` cells in milestone M3, commit, tag the commit
 `criteria-frozen`, and do not edit thresholds after that. A threshold chosen after
 seeing the data is a description, not a criterion. Later changes go in a dated
 amendment table at the bottom, with the reason.
@@ -82,17 +82,38 @@ Wilson 95% lower bound if every isolate in the arm is called correctly:
 
 | ID | Criterion | Metric | Threshold | Arm | Computed by |
 |---|---|---|---|---|---|
-| AC1 | Assembly QC | total length, contigs, N50, est. depth, cgMLST loci called | TBD (set from literature/Phase 0, e.g. length within expected Lm range; loci called ≥ 95 %) | all | `results/qc_summary.csv` |
+| AC1 | Assembly QC | total length, contigs, N50, est. depth, cgMLST loci called | all six gates below | all | `results/qc_summary.csv` |
 | AC2 | Typing consistency | MLST ST matches the public record for each isolate | 100 % | all | `results/typing_check.csv` |
 | AC3 | Outbreak recovery | outbreak isolates in one cgMLST cluster at the frozen threshold T | 28/28 (report Wilson bound) | SENS | `bin/cluster_metrics.py` → `threshold_sweep.csv` |
-| AC4 | Exclusion | non-outbreak isolates outside that cluster at T | TBD | SPEC-T + SPEC-A | same |
-| AC5 | Method agreement | cgMLST cluster at T vs SNP cluster at S give the same membership | TBD (e.g. identical outbreak membership) | all | `results/method_agreement.csv` |
+| AC4 | Exclusion | non-outbreak isolates outside that cluster at T | 8/8 (0 of 3 SPEC-T + 5 SPEC-A in the cluster); report Wilson bound 0.676 and "a pass means no counterexample in 8 isolates; specificity is not established"; any isolate in the cluster is named | SPEC-T + SPEC-A | same |
+| AC5 | Method agreement | cgMLST cluster at T vs SNP cluster at S give the same membership | identical outbreak-cluster membership over all QC-passing isolates; discordant isolates listed with both distances. Correlation of pairwise distances reported descriptively, no threshold | all | `results/method_agreement.csv` |
 | AC6 | Threshold robustness | outbreak membership unchanged for T−2 … T+2 | yes/no | SENS + SPEC | ReporTree `stableRegions` + sweep |
 | AC7 | Reproducibility | second run from the same commit gives identical cgMLST matrix (sha256) and partitions | identical | all | `results/rerun_check.csv` |
 
-Frozen cgMLST threshold T = **TBD** (cite the source: the commonly used 7-allele
-*L. monocytogenes* threshold — find and cite its primary reference yourself).
-Paired SNP threshold S = **TBD** (with source).
+### AC1 QC gates (an isolate must pass all six)
+
+| Gate | Threshold | Basis |
+|---|---|---|
+| Species check (Kraken2) | ≥ 90 % of classified reads *L. monocytogenes* | contamination gate **[verify: published Lm cut-off]** |
+| Total assembly length | 2.7–3.2 Mb | expected *L. monocytogenes* genome size **[verify: PulseNet/EFSA Lm range]** |
+| Contigs (≥ 500 bp) | ≤ 300 | short-read assembly sanity check **[verify]** |
+| N50 | ≥ 20 kb | as above **[verify]** |
+| Estimated depth after trimming | ≥ 20× | **[verify: PulseNet Lm minimum]**; one low-depth isolate shrinks the SNP core for all (Phase 0 §3d) |
+| cgMLST loci called | ≥ 95 % (≥ 1,661 of 1,748) | bounds the count-vs-proportion drift (below and Phase 0 §3b) |
+
+Frozen cgMLST threshold **T = 7 alleles**: Pasteur cgMLST1748, single linkage, ReporTree
+partition `MST-7x1.0`. Source: Moura A et al. *Nat Microbiol* 2016;2:16185, where 7 is a
+proportion of the 1,748 loci (0.400 %). ReporTree applies it as a count of differing loci
+among loci called in both profiles (Phase 0 §3b). At the AC1 floor of 1,661 shared loci,
+7 mismatches is 0.421 %, so the drift from Moura's definition is at most ~0.4 alleles.
+
+Paired SNP threshold **S = 20 SNPs**: snippy-core alignment, snp-dists, single linkage.
+**[verify]** Source: common hqSNP practice for *L. monocytogenes* outbreak definition
+(e.g. Pightling et al. 2018, *Front Microbiol*) — primary source not yet checked. If no
+defensible source is found, S is not frozen and AC5 becomes descriptive.
+
+**Not frozen while any [verify] remains.** The `criteria-frozen` tag waits until each
+[verify] is replaced by a checked citation or the value is changed.
 
 ## Amendments after freezing
 
