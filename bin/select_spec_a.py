@@ -23,7 +23,8 @@ Outputs:
   --clusters-log  every SNP cluster: isolates tried in step 4 and the cluster CC
   --log       every isolate the step 5 walk reached, with the step that decided it
   --selected  the selected isolates
-  --runs      with --append-runs, SPEC-A rows appended (only when all N were selected)
+  --runs      with --append-runs, SPEC-A rows appended (all N selected, or
+              --accept-shortfall after the shortfall is accepted in the rule)
 """
 
 import argparse
@@ -365,6 +366,8 @@ def main():
     p.add_argument("--selected", default="data/spec_a_selected.tsv")
     p.add_argument("--runs", default="data/runs.tsv")
     p.add_argument("--append-runs", action="store_true")
+    p.add_argument("--accept-shortfall", action="store_true",
+                   help="append fewer than --n rows; only after the shortfall is accepted in the rule")
     args = p.parse_args()
 
     snapshot = os.path.basename(args.metadata).split(".metadata")[0]
@@ -406,9 +409,11 @@ def main():
                    "step4_excluded": excluded, "step5": tally, "selected": len(selected), "n": args.n}, fh, indent=1)
 
     if len(selected) < args.n:
-        log(f"SHORTFALL: {len(selected)}/{args.n} selected; list exhausted (rule step 6). "
-            "runs.tsv not changed.")
-        return 2
+        log(f"SHORTFALL: {len(selected)}/{args.n} selected; list exhausted (rule step 6).")
+        if not args.accept_shortfall:
+            log("runs.tsv not changed (pass --accept-shortfall once the shortfall is "
+                "accepted in acceptance_criteria.md).")
+            return 2
     if args.append_runs:
         append_runs(args.runs, selected, snapshot)
         log(f"appended {len(selected)} SPEC-A rows to {args.runs}")
