@@ -6,6 +6,9 @@ data/*
 !data/ena_catalogue.tsv
 !data/metadata.tsv
 !data/spec_a_query.md
+!data/spec_a_clusters.tsv
+!data/spec_a_selection.tsv
+!data/spec_a_selected.tsv
 !data/Listeria_monocytogenes_1408MLGX6-3WGS.tsv
 results/
 .DS_Store
